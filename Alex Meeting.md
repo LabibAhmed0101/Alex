@@ -1,14 +1,12 @@
-# Client Meeting Guide
-### For: [Manager Name]
-### Project: Meridian — Custom Business Platform for [Client Name]
-
+# Client Meeting
+### For: [Alex]
 ---
 
 ## Before the Meeting — What This Project Is
 
 We are building a fully custom business platform for this client from scratch. It will handle their entire operation — quoting, invoicing, sales pipeline, warehouse, supplier orders, customer pickup, and financials — all in one system built specifically for them.
 
-The meeting today has three goals:
+Our Main Goals:
 1. Get answers to questions we need before we can start building
 2. Let the client know what they need to do on their end to get started
 3. Set the right expectations on timeline and what happens when
