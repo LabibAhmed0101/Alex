@@ -23,7 +23,7 @@ Every question here affects what we build and how we build it.
 
 > This is the most important topic we need to know.
 
-**Q1 — How do you currently communicate with their suppliers/customers in China?**
+**Q1 — How do they currently communicate with their suppliers/customers in China?**
 *(Are they using WhatsApp, WeChat?)*
 
 **Q2 — How many suppliers/customers in China do they actively communicate with?**
@@ -71,7 +71,7 @@ A business talking to 3 suppliers/customers needs something very different from 
 
 ### About the System Itself
 
-**Q10 — What is the single biggest pain point in your operation right now?**
+**Q10 — What is the single biggest pain point in their operation right now?**
 *(What takes the most time, causes the most errors, or frustrates the team most? if there is any)*
 
 **Q11 — Who are we going to coordinate with during the build for questions and feedback?**
