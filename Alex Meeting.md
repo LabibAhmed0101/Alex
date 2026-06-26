@@ -23,10 +23,10 @@ Every question here affects what we build and how we build it.
 
 > This is the most important topic we need to know.
 
-**Q1 — How do you currently communicate with your suppliers/customers in China?**
+**Q1 — How do you currently communicate with their suppliers/customers in China?**
 *(Are they using WhatsApp, WeChat?)*
 
-**Q2 — How many suppliers/customers in China do you actively communicate with?**
+**Q2 — How many suppliers/customers in China do they actively communicate with?**
 *(Just a rough number — 2, 5, 10, more?)*
 A business talking to 3 suppliers/customers needs something very different from one managing 100.
 
