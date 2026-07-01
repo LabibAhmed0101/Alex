@@ -49,3 +49,34 @@ Handoff shorthand: **INV** = `HANDOFF.md` · **CRM** = `CRM-HANDOFF.md` · **PU*
 | 34 | **`client_purchases`** table (client profile purchase history) | CRM §3 | **P4** | — |
 
 ---
+
+## Phase plan (grouped by priority)
+
+### P0 — Foundation (do first; everything downstream depends on these)
+- **#1 Payments** and **#2 auto-gen routing** — correct money-in → correct orders. Without a payments model, partial payments, receivables, and On-Hold vs. Awaiting-Pick are all wrong.
+- **#3 Storage** and **#4 Realtime** — infrastructure decisions. Handoffs assume Supabase gives both for free; since the stack is Clerk + Express, pick equivalents now because P1/P3 can't ship without them.
+
+### P1 — Core fulfillment correctness
+- **#5–#6** scan-to-pack that actually moves inventory and is race-safe.
+- **#7–#8** notifications firing on the real events, targeted to roles.
+- **#9** fulfillment path; **#10** order closing (signatures/slip).
+
+### P2 — Depth & financial/compliance correctness
+- **#11** tier lock, **#12** snapshotting — protect pricing integrity.
+- **#13** overseas lifecycle depth + receive-into-inventory.
+- **#14** bank account balance model.
+
+### P3 — Pickup flow (`CRM-HANDOFF-Pickup.md`, built as one epic)
+- **#15–#24** — signed QR tokens, customer email/SMS, picker slip, handheld scanner sync, proof photos, dual signatures, live tracking, completion decrement. Build **after** P0 (#3 Storage, #4 Realtime) since the whole addendum rests on them.
+
+### P4 — Large features & enhancements
+- **#25–#27** invoicing polish (spec fields → rich drawings → server PDF).
+- **#28** CSV import, **#29 AI Takeoff** (biggest single feature), **#30** RLS/views, **#31–#34** scanning/UX niceties.
+
+---
+
+## Notes on sequencing
+- **Storage (#3)** and **Realtime (#4)** are gatekeepers — resolving them early unblocks #10, #16–#24, #27, #29.
+- The **pickup flow (P3)** and **invoicing polish + AI takeoff (P4)** are the two largest bodies of remaining work; neither should start before their P0 dependencies land.
+- Items the handoffs explicitly flag as "finish in the app layer" (tier lock #11, RLS #30, auto-gen as a DB trigger #2) are correctness/security debts — don't let them slip past P2.
+</content>
