@@ -23,7 +23,7 @@
 | **T1-5** Unauthenticated request blocked | No session = 401 |
 | **T1-6** CSRF protection — invalid state rejected | A callback with a fabricated or expired state is rejected |
 
-### Phase 2 — Customer + Invoice Push (partial)
+### Phase 2 — Customer + Invoice Push
 
 | Test | Goal |
 |------|------|
@@ -32,15 +32,6 @@
 | **T2-3** Re-push updates, does not duplicate | Pushing the same invoice twice updates, never creates a second QB invoice |
 | **T2-4** Invoice with no line items is rejected | Syncing an invoice that has no line items must fail with a clear error |
 | **T2-5** Invoice with no client is rejected | Cannot sync an invoice with no associated client |
-
----
-
-## Unfinished
-
-### Phase 2 — Customer + Invoice Push (remaining)
-
-| Test | Goal |
-|------|------|
 | **T2-6** Client with duplicate DisplayName in QBO (6240 recovery) | If a customer with the same name already exists in QBO independently, the sync adopts it instead of failing |
 | **T2-7** Invoice with discount = 0 — no discount line in QBO | Zero discount does not produce a `DiscountLineDetail` line |
 | **T2-8** Invoice with a discount — discount line appears in QBO | A non-zero discount is pushed as a `DiscountLineDetail` |
@@ -75,8 +66,6 @@
 | **T5-1** Valid webhook signature accepted | A correctly signed webhook payload is processed |
 | **T5-2** Invalid/missing signature rejected | Unsigned webhooks are rejected with 401 |
 | **T5-3** Wrong signature rejected | A webhook signed with the wrong key is rejected |
-| **T5-4** QB-side payment flips invoice to `paid` without duplicate ledger | A Payment created in sandbox QBO marks the Formhaus Atelier invoice `paid` |
-| **T5-5** Idempotent — webhook received twice does not duplicate | If Intuit retries the same webhook, the second delivery is a no-op |
 | **T5-6** Rate limiter — 61+ requests from same IP throttled | The in-process rate limiter caps webhook delivery at 60/min per IP |
 
 ### Phase 6 — Overseas Expense Sync
@@ -92,9 +81,20 @@
 
 ### Security Checks
 
-| Test | Goal |
-|------|------|
-| **TS-1** Tokens never appear in any API response | No access/refresh tokens are serialized in any API response |
-| **TS-2** `QBO_*` env vars never reach the client bundle | QB secrets are server-only and not present in the frontend build |
-| **TS-3** Webhook raw body available for HMAC | `express.json` is configured with a `verify` callback to capture `rawBody` |
-| **TS-4** Sync and status routes require admin for money-moving operations | All admin routes enforce auth correctly |
+| Test | Result | Notes |
+|------|--------|-------|
+| **TS-1** Tokens never appear in any API response | PASS | `/status` uses explicit `select({})` with 5 safe fields; grep confirms no token fields in route file; `exchangeCode` returns only `realmId` + `expiresAt` |
+| **TS-2** `QBO_*` env vars never reach the client bundle | PASS (static) | No `define` block in `vite.config.ts`; zero `QBO_*` references in `artifacts/formhaus/`; no `VITE_QBO*` anywhere; all `QBO_*` access confined to `api-server/src/`. Live build blocked by missing Rollup native bindings on Windows — static analysis is conclusive |
+| **TS-3** Webhook raw body available for HMAC | PASS | `app.ts` lines 39–44: `express.json({ verify })` stashes `req.rawBody`; webhook route guards against missing `rawBody` with `500 "Server configuration error"`; `verifyWebhookSignature` uses `timingSafeEqual` |
+| **TS-4** Sync and status routes require admin | PASS | All 7 listed routes have `requireAdmin`; middleware returns 401 (no session) or 403 (non-admin); fast-path JWT check + slow-path Clerk API lookup prevents stale-token bypass |
+
+---
+
+## Deferred — Requires Real QB Payment
+
+These tests require a Payment to be received in sandbox QBO and delivered via webhook. They will be run once a real payment event is available.
+
+| Test | Goal | Blocked on |
+|------|------|-----------|
+| **T5-4** QB-side payment flips invoice to `paid` without duplicate ledger | A Payment created in sandbox QBO marks the Formhaus Atelier invoice `paid` and creates exactly one local order + ledger entry | Real QB payment in sandbox + publicly reachable webhook URL (ngrok or deployed URL) |
+| **T5-5** Idempotent — webhook received twice does not duplicate | If Intuit retries the same webhook, the second delivery is a no-op | Depends on T5-4 completing first |
