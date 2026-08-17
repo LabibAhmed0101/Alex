@@ -152,13 +152,8 @@ manually."* The most useful half of a template is stored and then discarded.
 ### #15 — Configurable discount thresholds
 **Nothing is configurable, and there is only one threshold.**
 `DISCOUNT_APPROVAL_THRESHOLD = 15` is hardcoded twice in the invoices route. There is **no 30%
-tier anywhere** — the PIN fires above 15% for admins, not above 30%.
-
-What *is* settings-editable is the per-tier client discount percentage, which is a different
-thing.
-
-- `artifacts/api-server/src/routes/invoices.ts:539, 1030`
-- `artifacts/api-server/src/routes/settings.ts:103-138`
+tier anywhere** — the PIN fires above 15% for admins, not above 30%. This shouldn't be built,
+formhaus only suggested it without any confirmation that we should do it, if i remmber correctly.
 
 ### #31 — Catalog items linked to default supplier
 `defaultSupplierId` exists on both system types and catalog products, with a supplier picker in
