@@ -2,10 +2,6 @@
 
 How Yosef, Ofir and Zack differ from each other. Based on spec §2.1–§2.3 plus the answers
 we got on the our open questions.
-
-The important thing to read first is the last section: **most of what separates the three
-admins is not built yet.**
-
 ---
 
 ## At a glance
