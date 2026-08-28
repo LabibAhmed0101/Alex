@@ -50,6 +50,3 @@
 - **Three tests were failing** on the batch as it arrived. None turned out to be a new bug — two were checking for behaviour the system had deliberately changed, and one needed a setting the test itself should have provided. All three now pass.
 - **Nine pieces of software were being installed on every deployment** to support a one-off task that had already been done. Removed.
 
-::: note What "fixed" means here
-Every item above is covered by an automated test that fails if the problem comes back. The system now runs 599 of those tests, up from 555, and all of them pass. Before this batch went in, three were failing.
-:::
