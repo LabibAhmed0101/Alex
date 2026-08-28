@@ -11,7 +11,7 @@
 
 ### The rotation timer, now settled
 
-- **The timer is fourteen days, flat.** The old seven days plus a three-day bonus is gone, as you told us on the 27th.
+- **The timer is fourteen days, flat.** The old seven days plus a three-day bonus is gone.
 - **A deal past Sold no longer rotates away from its broker.** Docs Out, Signed and BV Completed had been running a live timer, which meant a deal could be handed to a different broker days before it funded — with the commission attached. You told us in August that past Sold the deal stays with the broker who did the work. It now does.
 - **Going backwards no longer buys time.** Moving a lead back a stage and forward again was starting a fresh fourteen days, every time, with no limit. The clock now only resets when a lead reaches a stage it has not reached before under its current broker.
 - **A rotated lead arrives as a Cold Lead**, as your specification describes. Before this, a lead that rotated while at Shopped Out landed on the new broker still reading Shopped Out — a stage they had nothing to do with reaching.
